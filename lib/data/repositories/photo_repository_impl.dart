@@ -17,6 +17,7 @@ class PhotoRepositoryImpl implements PhotoRepository {
   final CameraLocalDataSource cameraLocalDataSource;
   final LocationLocalDataSource locationLocalDataSource;
   final http.Client client;
+  static const String baseUrl = 'https://crudcrud.com/api/ff4d36fbae684bb182ca7d025da2e004/gallery';
 
   PhotoRepositoryImpl({
     required this.cameraLocalDataSource,
@@ -54,7 +55,7 @@ class PhotoRepositoryImpl implements PhotoRepository {
       'photo': base64Image, // Include base64 image in JSON
     };
 
-    final url = Uri.parse('https://crudcrud.com/api/ff4d36fbae684bb182ca7d025da2e004/images');
+    final url = Uri.parse(baseUrl);
 
     final response = await client.post(
       url,
@@ -72,11 +73,55 @@ class PhotoRepositoryImpl implements PhotoRepository {
     }
   }
 
+  // Future<void> _uploadPhotoData(PhotoRequestModel photoRequest) async {
+  //   var request = http.MultipartRequest(
+  //     'POST',
+  //     Uri.parse(baseUrl),
+  //   );
+
+  //   // Add the image file as a multipart file
+  //   request.files.add(
+  //     await http.MultipartFile.fromPath(
+  //       'photo', // This should match the field name your server expects
+  //       photoRequest.photo.path,
+  //     ),
+  //   );
+
+  //   // Add other fields as string parameters
+  //   request.fields['comment'] = photoRequest.comment;
+  //   request.fields['latitude'] = photoRequest.latitude.toString();
+  //   request.fields['longitude'] = photoRequest.longitude.toString();
+
+  //   try {
+  //     final streamedResponse = await request.send();
+  //     final response = await http.Response.fromStream(streamedResponse);
+
+  //     if (kDebugMode) {
+  //       print("Response status code: ${response.statusCode}");
+  //       print("Response body: ${response.body}");
+  //     }
+
+  //     if (response.statusCode < 200 || response.statusCode >= 300) {
+  //       throw ServerException();
+  //     }
+  //   } on SocketException catch (e) {
+  //     if (kDebugMode) {
+  //       print("SocketException during upload: ${e.toString()}");
+  //     }
+  //     throw ServerException();
+  //   } catch (e) {
+  //     if (kDebugMode) {
+  //       print("Error during upload: ${e.toString()}");
+  //     }
+  //     throw ServerException();
+  //   }
+  // }
+
   @override
   Future<Either<Failure, List<ImageEntity>>> getImages() async {
     try {
       // Replace with your actual server endpoint for fetching images
-      final url = Uri.parse('https://crudcrud.com/api/ff4d36fbae684bb182ca7d025da2e004/images');
+      final url = Uri.parse(baseUrl);
       final response = await client.get(url);
 
       if (response.statusCode == 200) {
