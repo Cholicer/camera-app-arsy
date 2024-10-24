@@ -1,5 +1,5 @@
 import 'package:camera/camera.dart';
-import 'package:camera_app/presentation/camera/pages/fullscreen_camera_preview_page.dart';
+import 'package:camera_app/presentation/camera/pages/camera_page.dart';
 import 'package:camera_app/presentation/gallery/bloc/gallery_bloc.dart';
 import 'package:camera_app/presentation/gallery/widgets/image_grid.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +56,7 @@ class _GalleryPageState extends State<GalleryPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => FullscreenCameraPreviewPage(
+              builder: (context) => CameraPage(
                 camera: widget.cameras.first,
                 onPhotoUploaded: _refreshGallery,
               ),
